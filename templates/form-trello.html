@@ -1,0 +1,143 @@
+{{ define "content" }}
+
+{{ if .Msg }}
+    <div class="alert alert-primary" role="alert">
+       {{.Msg}}
+    </div>
+{{ end }}
+
+<form action="/save" method="post" enctype="multipart/form-data">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            </br>
+            <h3>Solicitação de Artes</h3>
+            <hr>
+        </div>
+
+        <div class="col-md-12">
+            <h5>DADOS DO SOLICITANTE</h5>
+            <span>
+                Informe seus dados, para que possamos entrar em contato havendo alguma duvida,
+                e para avisar sobre o andamento da solicitação.
+            </span>
+            <hr>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Nome Completo</label>
+                <input type="input" class="form-control" name="name" id="name" placeholder="Sua resposta" required="true">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Email para contato</label>
+                <input type="email" class="form-control" name="email"  id="email" placeholder="Sua resposta" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="true">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Celular para contato</label>
+                <input type="tel" class="form-control" name="phone"  id="phone" placeholder="99999-9999" pattern="\[0-9]{5}-[0-9]{4}" required="true">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
+
+        <div class="col-md-12">
+            <h5>DADOS DA SOLICITAÇÃO</h5>
+            <span>
+                Preencha agora as informações sobre o evento/ação.</br>
+                Use o campo "Informações Adicionais" para colocar outras informações que ache necessário.
+            </span>
+            <hr>
+        </div>
+
+        <div class="col-md-5">
+            <div class="form-group">
+                <label name="lblMinister" id="lblMinister" for="exampleFormControlInput1">Ministério</label>
+                <input type="input" class="form-control" name="minister" id="minister" placeholder="Sua resposta" required="true">
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Nome da Ação/Evento</label>
+                <input type="input" class="form-control" name="event"  id="event" placeholder="Sua resposta" required="true">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Transmissão ao vivo?</label>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="broadcastOptions" id="bcNo" value="false" required checked>
+                    <label class="form-check-label" for="exampleFormControlInput1">Não</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="broadcastOptions" id="bcYes" value="true" required>
+                    <label class="form-check-label" for="exampleFormControlInput1">Sim</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Data e Hora da Ação/Evento</label>
+                <input type="datetime-local" class="form-control" name="date" id="date" onkeydown="return false" required="true">
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <label for="exampleFormControlInput1"><b>OBSERVAÇÃO:</b></label>
+                <label for="exampleFormControlInput1">Tenha em mente que essa solicitação tem que ser enviada com no
+                    minimo de {{.MinDay}} dias antes da data do evento.</label>
+            </div>
+            <span>
+
+            </span>
+        </div>
+
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Tema/Assunto (opcional)</label>
+                <input type="input" class="form-control" name="subject"  id="subject" placeholder="Sua resposta" required="false">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Versículo (opcional)</label>
+                <input type="input" class="form-control" name="verse"  id="verse" placeholder="Sua resposta" required="false">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Anexar arquivo (opcional)</label>
+                <input type="file" class="filestyle" name="attachment" id="attachment"
+                       data-btnClass="btn btn-primary" data-buttonBefore="true"
+                       data-text="Escolher Arquivo">
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Informações Adicionais (opcional)</label>
+                <textarea class="form-control" name="infos" id="infos" placeholder="Sua resposta" required="false"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-2 align-self-center">
+            <input type="submit" value="Enviar" class="btn btn-primary btn-lg btn-block" >
+        </div>
+    </div>
+</div>
+
+</form>
+{{end}}
