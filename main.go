@@ -43,7 +43,7 @@ func main() {
 
 	mx.HandleFunc("/", Enter)
 	mx.HandleFunc("/save", Save)
-	//mx.HandleFunc("/attach/{file}", Attach)
+	mx.HandleFunc("/attach/{file}", Attach)
 
 	// http serves
 	http.Handle("/", mx)
