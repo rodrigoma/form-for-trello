@@ -51,7 +51,7 @@ func main() {
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	http.ListenAndServe(setting.ServerSetting.Port, nil)
+	http.ListenAndServe(":" + setting.ServerSetting.Port, nil)
 }
 
 func authMiddleware(next http.Handler) http.Handler {

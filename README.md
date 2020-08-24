@@ -40,7 +40,7 @@ docker run \
     -p 9000:9000 \
     -e APP_MINDAY=20 \
     -e APP_TITLE='Solicitação de Arte' \
-    -e SERVER_PORT=':9000' \
+    -e SERVER_PORT=9000 \
     -e SERVER_RUNMODE=debug \
     -e TRELLO_APPKEY='<APP_KEY>' \
     -e TRELLO_BOARDID='<BOARD_ID>' \

@@ -3,6 +3,7 @@ package setting
 import (
 	"github.com/kelseyhightower/envconfig"
 	"log"
+	"os"
 )
 
 type App struct {
@@ -32,6 +33,10 @@ func Setup() {
 	mapTo("APP", AppSetting)
 	mapTo("SERVER", ServerSetting)
 	mapTo("TRELLO", TrelloSetting)
+
+	if os.Getenv("PORT") != "" {
+		ServerSetting.Port = os.Getenv("PORT")
+	}
 }
 
 func mapTo(section string, v interface{}) {
