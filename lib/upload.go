@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-const maxUploadSize = 10 << 20 // 10 mb
+const maxUploadSize = 10 << 20
 const uploadPath = "/tmp"
 
 func UploadFile(r *http.Request) (filename string, err error) {

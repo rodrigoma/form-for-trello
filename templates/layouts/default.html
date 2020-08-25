@@ -15,12 +15,12 @@
 
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js"> </script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="/static/form.js"></script>
-
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js"> </script>
 
     <script>
         $(function(){
@@ -39,6 +39,10 @@
             var maxDate = year + '-' + month + '-' + day + "T00:00:00";
 
             $('#date').attr('min', maxDate);
+        });
+
+        $(document).ready(function(){
+            $('#phone').mask('00000-0000');
         });
     </script>
 </head>
