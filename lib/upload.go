@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-const maxUploadSize = 10 * 1024 * 1024 // 10 mb
+const maxUploadSize = 10 << 20 // 10 mb
 const uploadPath = "/tmp"
 
 func UploadFile(r *http.Request) (filename string, err error) {
@@ -34,6 +34,9 @@ func UploadFile(r *http.Request) (filename string, err error) {
 	case "application/zip", "application/x-zip-compressed":
 	case "application/x-rar-compressed":
 	case "application/pdf":
+	case "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessing":
+	case "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+	case "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation":
 		break
 	default:
 		return "", errors.New("INVALID_FILE_TYPE")

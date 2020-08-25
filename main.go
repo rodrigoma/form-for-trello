@@ -20,6 +20,10 @@ type PageData struct {
 	MinDay	 int
 }
 
+type ErrorPageData struct {
+	ErrorInfo	string
+}
+
 func cleanup() {
 	fmt.Println("Cleanup")
 }
@@ -40,7 +44,7 @@ func main() {
 	mx := mux.NewRouter()
 
 	mx.Use(authMiddleware)
-
+	mx.NotFoundHandler = http.HandlerFunc(NotFound404)
 	mx.HandleFunc("/", Enter)
 	mx.HandleFunc("/save", Save)
 	mx.HandleFunc("/attach/{file}", Attach)
@@ -88,7 +92,7 @@ func Save(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Request ->", r.URL.Path)
 
-	r.ParseMultipartForm(0)
+	r.ParseMultipartForm(10 << 20)
 
 	file, _, _ := r.FormFile("attachment")
 
@@ -110,19 +114,39 @@ func Save(w http.ResponseWriter, r *http.Request) {
 }
 
 func Attach(w http.ResponseWriter, r *http.Request) {
-
 	log.Println("Request ->", r.URL.Path)
 
 	vars := mux.Vars(r)
 
 	log.Println("VARS ->", vars)
 
-	dat, err := ioutil.ReadFile("/tmp/" + vars["file"])
+	file, err := os.Open("/tmp/" + vars["file"])
+	if err != nil {
+		log.Panicf("failed reading file: %s", err)
+	}
+	defer file.Close()
 
+	dat, err := ioutil.ReadAll(file)
 	if err != nil {
 		log.Fatalln("Error ->", err)
+		return
 	}
 
 	w.Write(dat)
+}
 
+func NotFound404(w http.ResponseWriter, r *http.Request) {
+	log.Println(" page not found")
+	tmpl := template.Must(template.ParseFiles("templates/404.html"))
+	tmpl.Execute(w, ErrorPageData{
+		ErrorInfo:    " File not found ",
+	})
+}
+
+func SystemError(w http.ResponseWriter, r *http.Request) {
+	log.Println(" System Error") //system error triggered Critical, then logging will not only send a message
+	tmpl := template.Must(template.ParseFiles("templates/error.html"))
+	tmpl.Execute(w, ErrorPageData{
+		ErrorInfo:    " system is temporarily unavailable ",
+	})
 }

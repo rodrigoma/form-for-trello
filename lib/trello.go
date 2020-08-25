@@ -75,7 +75,7 @@ func CreateCard(r *http.Request, filename string) (card *trello.Card) {
 }
 
 func addAttach(card *trello.Card, url string) {
-	attach := trello.Attachment{URL: url, Name: "Invoice"}
+	attach := trello.Attachment{URL: url, Name: "anexo"}
 
 	err = card.AddURLAttachment(&attach)
 
