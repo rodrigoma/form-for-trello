@@ -110,7 +110,10 @@ func Save(w http.ResponseWriter, r *http.Request) {
 		log.Println("Added Card : ", card.Name)
 	}
 
-	http.Redirect(w, r, "/?msg=Sua solicitação foi enviada com sucesso!", http.StatusPermanentRedirect)
+	qryMsg := "/?msg=Sua solicitação foi enviada com sucesso!"
+	urlRedir := r.Header.Get("Referer") + qryMsg
+
+	http.Redirect(w, r, urlRedir, http.StatusFound)
 }
 
 func Attach(w http.ResponseWriter, r *http.Request) {
