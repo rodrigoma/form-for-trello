@@ -55,7 +55,7 @@ func main() {
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	http.ListenAndServe(":" + setting.ServerSetting.Port, nil)
+	log.Fatal(http.ListenAndServe(":" + setting.ServerSetting.Port, nil))
 }
 
 func authMiddleware(next http.Handler) http.Handler {
@@ -132,6 +132,7 @@ func Attach(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Content-Type", "*/*")
 	w.Write(dat)
 }
 
