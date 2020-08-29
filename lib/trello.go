@@ -4,6 +4,7 @@ import (
 	"formfortrello/setting"
 	"formfortrello/utils"
 	"github.com/adlio/trello"
+	"google.golang.org/api/drive/v3"
 	"log"
 	"net/http"
 )
@@ -32,7 +33,7 @@ func Setup() {
 	list = lists[setting.TrelloSetting.ListNumber]
 }
 
-func CreateCard(r *http.Request, fileId string) (card *trello.Card) {
+func CreateCard(r *http.Request, fileGD *drive.File) (card *trello.Card) {
 	form := r.PostForm
 
 	dt := utils.FormatDate(form.Get("date"))
@@ -66,16 +67,16 @@ func CreateCard(r *http.Request, fileId string) (card *trello.Card) {
 		log.Fatalln("Error on creating card", err.Error())
 	}
 
-	if fileId != "" {
-		attachUrl := utils.GetGDSharedUrl(fileId)
-		addAttach(card, attachUrl)
+	if fileGD != nil {
+		attachUrl := utils.GetGDSharedUrl(fileGD.Id)
+		addAttach(card, attachUrl, fileGD.Name)
 	}
 
 	return
 }
 
-func addAttach(card *trello.Card, url string) {
-	attach := trello.Attachment{URL: url, Name: "anexo"}
+func addAttach(card *trello.Card, url string, filenameGD string) {
+	attach := trello.Attachment{URL: url, Name: filenameGD}
 
 	err = card.AddURLAttachment(&attach)
 

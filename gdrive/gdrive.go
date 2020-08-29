@@ -34,7 +34,7 @@ func Setup() {
 	}
 }
 
-func UploadGDrive(r *http.Request) (fileId string, err error){
+func UploadGDrive(r *http.Request) (fileGD *drive.File, err error){
 	//if err := r.ParseMultipartForm(maxUploadSize2); err != nil {
 	//	return "", errors.New("FILE_TOO_BIG")
 	//}
@@ -43,7 +43,7 @@ func UploadGDrive(r *http.Request) (fileId string, err error){
 	//----------- ISSO AQUI FEZ FUNCIONAR, ALGO RELACIONADO AO BYTES
 	fileAtt, headerAtt, err := r.FormFile("attachment")
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	defer fileAtt.Close()
 	//---------
@@ -55,12 +55,12 @@ func UploadGDrive(r *http.Request) (fileId string, err error){
 	//service, err := getService()
 
 	// Step 4. Create the file, upload its content and give permission
-	fileGD, err := createFile(filenameGD, fileAtt, setting.GDriveSetting.FolderId)
+	fileGD, err = createFile(filenameGD, fileAtt, setting.GDriveSetting.FolderId)
 	if err != nil {
 		panic(fmt.Sprintf("Could not create file: %v\n", err))
 	}
 
-	return fileGD.Id, err
+	return fileGD, err
 }
 
 func mountFilenameGD(form url.Values, attachmentName string) (filename string) {

@@ -99,16 +99,16 @@ func Save(w http.ResponseWriter, r *http.Request) {
 	file, _, _ := r.FormFile("attachment")
 
 	if file != nil {
-		fileId, err := gdrive.UploadGDrive(r)
+		fileGD, err := gdrive.UploadGDrive(r)
 		if err != nil {
 			log.Fatalln("Error ->", err)
 		}
 
-		card := lib.CreateCard(r, fileId)
+		card := lib.CreateCard(r, fileGD)
 
 		log.Println("Added Card with attach : ", card.Name)
 	} else {
-		card := lib.CreateCard(r, "")
+		card := lib.CreateCard(r, nil)
 
 		log.Println("Added Card : ", card.Name)
 	}
