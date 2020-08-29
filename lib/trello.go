@@ -32,7 +32,7 @@ func Setup() {
 	list = lists[setting.TrelloSetting.ListNumber]
 }
 
-func CreateCard(r *http.Request, filename string) (card *trello.Card) {
+func CreateCard(r *http.Request, fileId string) (card *trello.Card) {
 	form := r.PostForm
 
 	dt := utils.FormatDate(form.Get("date"))
@@ -47,8 +47,8 @@ func CreateCard(r *http.Request, filename string) (card *trello.Card) {
 		"**TEL:** " + form.Get("phone") + "\n\n" +
 		"- Dados Evento/Ação" + "\n\n" +
 		"**DATA/HORA:** " + dt + "\n" +
-		"**MINISTÉRIO:** " + form.Get("name") + "\n" +
-		"**EVENTO/AÇÃO:** " + form.Get("email") + "\n" +
+		"**MINISTÉRIO:** " + form.Get("minister") + "\n" +
+		"**EVENTO/AÇÃO:** " + form.Get("event") + "\n" +
 		"**AO VIVO?:** " + form.Get("broadcastOptions") + "\n" +
 		"**TEMA:** " + form.Get("subject") + "\n" +
 		"**VERSÍCULO:** " + form.Get("verse") + "\n" +
@@ -66,8 +66,8 @@ func CreateCard(r *http.Request, filename string) (card *trello.Card) {
 		log.Fatalln("Error on creating card", err.Error())
 	}
 
-	if filename != "" {
-		attachUrl := "http://" + r.Host + "/attach/exp_" + filename
+	if fileId != "" {
+		attachUrl := utils.GetGDSharedUrl(fileId)
 		addAttach(card, attachUrl)
 	}
 

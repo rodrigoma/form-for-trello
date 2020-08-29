@@ -2,6 +2,7 @@ package setting
 
 import (
 	"github.com/kelseyhightower/envconfig"
+	"golang.org/x/oauth2"
 	"log"
 	"os"
 )
@@ -10,14 +11,12 @@ type App struct {
 	Title    string
 	MinDay   int
 }
-
 var AppSetting = &App{}
 
 type Server struct {
 	RunMode      string
 	Port         string
 }
-
 var ServerSetting = &Server{}
 
 type Trello struct {
@@ -26,13 +25,27 @@ type Trello struct {
 	BoardID    string
 	ListNumber int
 }
-
 var TrelloSetting = &Trello{}
+
+type Google struct {
+	Credentials	string
+}
+var GoogleSetting = &Google{}
+
+type GDrive struct {
+	FolderId	string
+}
+var GDriveSetting = &GDrive{}
+
+var GDTokenSetting = &oauth2.Token{}
 
 func Setup() {
 	mapTo("APP", AppSetting)
 	mapTo("SERVER", ServerSetting)
 	mapTo("TRELLO", TrelloSetting)
+	mapTo("GDTOKEN", GDTokenSetting)
+	mapTo("GOOGLE", GoogleSetting)
+	mapTo("GDRIVE", GDriveSetting)
 
 	if os.Getenv("PORT") != "" {
 		ServerSetting.Port = os.Getenv("PORT")
