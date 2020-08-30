@@ -27,34 +27,40 @@ type Trello struct {
 }
 var TrelloSetting = &Trello{}
 
-type Google struct {
-	Credentials	string
-}
-var GoogleSetting = &Google{}
+var GoogleTokenJson = &oauth2.Token{}
 
 type GoogleDrive struct {
 	FolderId	string
 }
 var GoogleDriveSetting = &GoogleDrive{}
 
-var GoogleTokenJson = &oauth2.Token{}
+type GoogleCredentials struct {
+	Credentials	string
+}
+var GoogleCredentialJson = &GoogleCredentials{}
 
 func Setup() {
+	log.Println("Start getting environment variables...")
+
 	mapTo("APP", AppSetting)
 	mapTo("SERVER", ServerSetting)
 	mapTo("TRELLO", TrelloSetting)
 	mapTo("GOOGLE_TOKEN_JSON", GoogleTokenJson)
-	mapTo("GOOGLE", GoogleSetting)
 	mapTo("GOOGLE_DRIVE", GoogleDriveSetting)
+	mapTo("GOOGLE", GoogleCredentialJson)
 
 	if os.Getenv("PORT") != "" {
 		ServerSetting.Port = os.Getenv("PORT")
+		log.Println("PORT automatic defined by service...")
 	}
+
+	log.Printf("Using PORT: %v\n", ServerSetting.Port)
 }
 
 func mapTo(section string, v interface{}) {
+	log.Printf("Reading envvars: %v\n", section)
 	err := envconfig.Process(section, v)
 	if err != nil {
-		log.Fatalf("envconfig.MapTo err: %v", err.Error())
+		log.Fatalf("envconfig.MapTo err: %v\n", err.Error())
 	}
 }

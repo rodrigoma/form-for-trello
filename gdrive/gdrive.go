@@ -19,7 +19,7 @@ import (
 var service *drive.Service
 
 func Setup() {
-	config, err := google.ConfigFromJSON([]byte(setting.GoogleSetting.Credentials), drive.DriveFileScope)
+	config, err := google.ConfigFromJSON([]byte(setting.GoogleCredentialJson.Credentials), drive.DriveFileScope)
 
 	if err != nil {
 		log.Fatalf("Error: Reading Config From JSON:  %v\n", err)
