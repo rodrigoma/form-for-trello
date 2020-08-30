@@ -25,7 +25,7 @@ func Setup() {
 		log.Fatalf("Error: Reading Config From JSON:  %v\n", err)
 	}
 
-	client := config.Client(context.Background(), setting.GDTokenSetting)
+	client := config.Client(context.Background(), setting.GoogleTokenJson)
 
 	service, err = drive.New(client)
 

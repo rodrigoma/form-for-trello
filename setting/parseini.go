@@ -37,13 +37,13 @@ type GDrive struct {
 }
 var GDriveSetting = &GDrive{}
 
-var GDTokenSetting = &oauth2.Token{}
+var GoogleTokenJson = &oauth2.Token{}
 
 func Setup() {
 	mapTo("APP", AppSetting)
 	mapTo("SERVER", ServerSetting)
 	mapTo("TRELLO", TrelloSetting)
-	mapTo("GDTOKEN", GDTokenSetting)
+	mapTo("GOOGLE_TOKEN_JSON", GoogleTokenJson)
 	mapTo("GOOGLE", GoogleSetting)
 	mapTo("GDRIVE", GDriveSetting)
 
