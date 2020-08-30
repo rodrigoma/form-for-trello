@@ -55,7 +55,7 @@ func UploadGDrive(r *http.Request) (fileGD *drive.File, err error){
 	//service, err := getService()
 
 	// Step 4. Create the file, upload its content and give permission
-	fileGD, err = createFile(filenameGD, fileAtt, setting.GDriveSetting.FolderId)
+	fileGD, err = createFile(filenameGD, fileAtt, setting.GoogleDriveSetting.FolderId)
 	if err != nil {
 		panic(fmt.Sprintf("Could not create file: %v\n", err))
 	}

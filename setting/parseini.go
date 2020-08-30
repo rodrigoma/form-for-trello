@@ -32,10 +32,10 @@ type Google struct {
 }
 var GoogleSetting = &Google{}
 
-type GDrive struct {
+type GoogleDrive struct {
 	FolderId	string
 }
-var GDriveSetting = &GDrive{}
+var GoogleDriveSetting = &GoogleDrive{}
 
 var GoogleTokenJson = &oauth2.Token{}
 
@@ -45,7 +45,7 @@ func Setup() {
 	mapTo("TRELLO", TrelloSetting)
 	mapTo("GOOGLE_TOKEN_JSON", GoogleTokenJson)
 	mapTo("GOOGLE", GoogleSetting)
-	mapTo("GDRIVE", GDriveSetting)
+	mapTo("GOOGLE_DRIVE", GoogleDriveSetting)
 
 	if os.Getenv("PORT") != "" {
 		ServerSetting.Port = os.Getenv("PORT")
