@@ -19,13 +19,13 @@ import (
 var service *drive.Service
 
 func Setup() {
-	config, err := google.ConfigFromJSON([]byte(setting.GoogleSetting.Credentials), drive.DriveFileScope)
+	config, err := google.ConfigFromJSON(setting.GoogleCredentialsByte, drive.DriveFileScope)
 
 	if err != nil {
 		log.Fatalf("Error: Reading Config From JSON:  %v\n", err)
 	}
 
-	client := config.Client(context.Background(), setting.GDTokenSetting)
+	client := config.Client(context.Background(), setting.GoogleTokenJson)
 
 	service, err = drive.New(client)
 
@@ -55,7 +55,7 @@ func UploadGDrive(r *http.Request) (fileGD *drive.File, err error){
 	//service, err := getService()
 
 	// Step 4. Create the file, upload its content and give permission
-	fileGD, err = createFile(filenameGD, fileAtt, setting.GDriveSetting.FolderId)
+	fileGD, err = createFile(filenameGD, fileAtt, setting.GoogleDriveSetting.FolderId)
 	if err != nil {
 		panic(fmt.Sprintf("Could not create file: %v\n", err))
 	}
